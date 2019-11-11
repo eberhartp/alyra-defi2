@@ -26,6 +26,10 @@ contract Reputation is Administrable {
         return _userAddresses.length;
     }
 
+    function getUserAddress(uint256 index) public view returns(address) {
+        return _userAddresses[index];
+    }
+
     function getUserDetails(address user) public view returns(string memory, uint256, bool) {
         return (_users[user].name, _users[user].reputation, _users[user].banned);
     }
