@@ -22,6 +22,14 @@ contract Reputation is Administrable {
         _userAddresses.push(msg.sender);
     }
 
+    function isRegisteredUser(address user) public view returns(bool) {
+        return _users[user].registered;
+    }
+
+    function isBannedUser(address user) public view returns(bool) {
+        return _users[user].banned;
+    }
+
     function getUsersCount() public view returns(uint256) {
         return _userAddresses.length;
     }
