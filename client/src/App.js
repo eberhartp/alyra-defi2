@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Web3 from "web3";
 import "./App.css";
-import Contracts from "./Contracts";
+import DemandList from "./DemandList";
 
 class App extends Component {
     constructor(props) {
@@ -44,7 +44,7 @@ class App extends Component {
             return null;
         return (
             <div className="App">
-                <Contracts web3={web3} account={account} />
+                <DemandList web3={web3} account={account} />
             </div>
         );
     }

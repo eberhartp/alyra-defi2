@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import Marketplace from "./contracts/Marketplace.json";
-import Contract from "./Contract";
+import Contract from "./DemandItem";
 
-class Contracts extends Component {
+class DemandList extends Component {
     constructor(props) {
         super(props);
         this.state = {
             web3: props.web3,
             account: props.account,
             marketplace: null,
-            nbContracts: 0
+            nbDemands: 0
         };
     }
 
@@ -19,10 +19,10 @@ class Contracts extends Component {
 
         if (networkData) {
             const marketplace = new this.state.web3.eth.Contract(Marketplace.abi, networkData.address);
-            const nbContracts = parseInt(await marketplace.methods.getNbContracts().call());
+            const nbDemands = parseInt(await marketplace.methods.getNbDemands().call());
             this.setState({
                 marketplace: marketplace,
-                nbContracts: nbContracts
+                nbDemands: nbDemands
             });
         } else {
             window.alert("Marketplace Contract not deployed to detected network");
@@ -30,13 +30,13 @@ class Contracts extends Component {
     }
 
     render() {
-        const { marketplace, nbContracts } = this.state;
+        const { marketplace, nbDemands } = this.state;
         return (
-            <div className="Contracts">
-                <ul className="ContractsList">
+            <div className="Demands">
+                <ul className="DemandsList">
                     {
-                        [...Array(nbContracts).keys()].map(contractId => 
-                            <Contract key={contractId.toString()} marketplace={marketplace} contractId={contractId}/>
+                        [...Array(nbDemands).keys()].map(contractId => 
+                            <DemandItem key={contractId.toString()} marketplace={marketplace} contractId={contractId}/>
                         )
                     }
                 </ul>
@@ -45,4 +45,4 @@ class Contracts extends Component {
     }
 }
 
-export default Contracts;
+export default DemandList;

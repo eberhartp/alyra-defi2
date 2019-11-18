@@ -9,17 +9,18 @@ contract Marketplace {
         Closed
     }
 
-    struct Contract {
+    struct Demand {
         uint256 remuneration;
         uint256 delay;
         string description;
         ContractState state;
         uint256 minReputation;
         address[] candidates;
+        uint startDate;
     }
 
     Reputation private _reputation;
-    Contract[] private _contracts;
+    Demand[] private _demands;
     address payable _owner;
 
     constructor(Reputation reputation) public {
@@ -31,27 +32,28 @@ contract Marketplace {
         require(_reputation.isRegisteredUser(msg.sender), "Unknown user");
         require(_reputation.isBannedUser(msg.sender), "Banned user");
         require(msg.value * 100 >= remuneration * 102, "Funds not sufficient");
-        _contracts.push(Contract({
+        _demands.push(Demand({
             remuneration: remuneration,
             delay: delay,
             description: description,
             state: ContractState.Open,
             minReputation: minReputation,
-            candidates: new address[](0)
+            candidates: new address[](0),
+            startDate: 0
         }));
     }
 
-    function getNbContracts() public view returns(uint256) {
-        return _contracts.length;
+    function getNbDemands() public view returns(uint256) {
+        return _demands.length;
     }
 
-    function getContractDetails(uint256 index) public view returns(uint256, uint256, string memory, ContractState, uint256) {
+    function getDemandDetails(uint256 index) public view returns(uint256, uint256, string memory, ContractState, uint256) {
         return (
-            _contracts[index].remuneration,
-            _contracts[index].delay,
-            _contracts[index].description,
-            _contracts[index].state,
-            _contracts[index].minReputation
+            _demands[index].remuneration,
+            _demands[index].delay,
+            _demands[index].description,
+            _demands[index].state,
+            _demands[index].minReputation
         );
     }
 }
