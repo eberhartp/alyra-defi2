@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Marketplace from "./contracts/Marketplace.json";
-import Contract from "./DemandItem";
+import DemandItem from "./DemandItem";
 
 class DemandList extends Component {
     constructor(props) {
